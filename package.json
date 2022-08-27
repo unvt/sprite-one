@@ -1,0 +1,11 @@
+{
+  "name": "sprite-one",
+  "version": "0.0.1",
+  "description": "Generate sprite images and json without mapnik",
+  "main": "index.js",
+  "author": "Taro Matsuzawa",
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.30.7"
+  }
+}
