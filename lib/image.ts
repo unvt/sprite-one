@@ -7,6 +7,7 @@ export class Image {
   width = 0
   height = 0
   range = 1
+  svg_obj: Buffer | null = null
 
   x = 0
   y = 0
@@ -21,6 +22,12 @@ export class Image {
     this.width = metadata.width!
     this.height = metadata.height!
     this.range = this.width * this.height
+    this.svg_obj = await sharp(this.svg_file)
+      .resize(
+        Math.round(this.width * this.ratio),
+        Math.round(this.height * this.ratio)
+      )
+      .toBuffer()
     // console.log(
     //   `name: ${this.name}, width: ${this.width}, height: ${this.height}, range: ${this.range}`
     // )

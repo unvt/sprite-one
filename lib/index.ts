@@ -27,7 +27,7 @@ export const generateSprite = async (
     matrix.calc()
     // output png
     const inputs = images.map((image) => {
-      return { input: image.svg_file, top: image.y, left: image.x }
+      return { input: image.svg_obj!, top: image.y, left: image.x }
     })
     sharp({
       create: {
