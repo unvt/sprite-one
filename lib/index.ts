@@ -48,5 +48,11 @@ export const generateSprite = async (
       .catch((err) => {
         console.log(err)
       })
+    // output json
+    const json: { [index: string]: any } = {}
+    images.forEach((image) => {
+      json[image.name] = image.to_obj()
+    })
+    fs.appendFileSync(output_json, JSON.stringify(json))
   })
 }
