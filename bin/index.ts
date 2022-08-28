@@ -21,10 +21,7 @@ if (require.main === module) {
     const ratio_option = argv[3]
     ratio = Number(ratio_option.split('=')[1])
   }
-  console.log(argv)
   const output_file_name = argv[1]
   const input_directory = argv[2]
-  generateSprite(output_file_name, input_directory, ratio).then(() => {
-    console.log('finish generate')
-  })
+  generateSprite(output_file_name, input_directory, ratio).then(() => {})
 }

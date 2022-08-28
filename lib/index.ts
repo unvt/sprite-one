@@ -25,12 +25,10 @@ export const generateSprite = async (
     images.sort((a, b) => a.range - b.range)
     const matrix = new Matrix(images)
     matrix.calc()
-    images.forEach((image) => console.log(image.to_obj()))
     // output png
     const inputs = images.map((image) => {
       return { input: image.svg_file, top: image.y, left: image.x }
     })
-    console.log(output_png)
     sharp({
       create: {
         width: matrix.max_x,
@@ -42,9 +40,7 @@ export const generateSprite = async (
       .composite(inputs)
       .png()
       .toFile(output_png)
-      .then((info) => {
-        console.log(info)
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err)
       })
@@ -53,6 +49,6 @@ export const generateSprite = async (
     images.forEach((image) => {
       json[image.name] = image.to_obj()
     })
-    fs.appendFileSync(output_json, JSON.stringify(json))
+    fs.writeFileSync(output_json, JSON.stringify(json))
   })
 }
