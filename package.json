@@ -2,7 +2,11 @@
   "name": "sprite-one",
   "version": "0.0.1",
   "description": "Generate sprite images and json without mapnik",
-  "main": "index.js",
+  "main": "dist/bin/index.js",
+  "types": "dist/lib/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc"
+  },
   "author": "Taro Matsuzawa",
   "license": "MIT",
   "dependencies": {
