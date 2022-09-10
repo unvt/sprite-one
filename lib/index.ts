@@ -8,15 +8,14 @@ export const generateSprite = async (
   input_directory: string,
   ratio = 1
 ): Promise<void> => {
-  const output_json = path.join(__dirname, '../', `${output_file_name}.json`)
-  const output_png = path.join(__dirname, '../', `${output_file_name}.png`)
+  const output_json = `${output_file_name}.json`
+  const output_png = `${output_file_name}.png`
   // Get file list
-  const input_directory_full_path = path.join(__dirname, '../', input_directory)
   const images: Image[] = []
-  const files = fs.readdirSync(input_directory_full_path)
+  const files = fs.readdirSync(input_directory)
   files.forEach((file) => {
     if (file.match(/[^.]+$/)?.toString() === 'svg') {
-      const svg_file = path.join(input_directory_full_path, file)
+      const svg_file = path.join(input_directory, file)
       const image = new Image(svg_file, ratio)
       images.push(image)
     }
