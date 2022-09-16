@@ -1,7 +1,5 @@
 # Generate sprite image and json without Mapnik
 
-This project move to https://github.com/unvt/sprite-one
-
 ## Install
 
 ```bash
