@@ -1,4 +1,5 @@
 import sharp from 'sharp'
+import { SpriteImage } from './interfaces'
 
 export class Image {
   svg_file: string
@@ -42,7 +43,7 @@ export class Image {
     return this.height * this.ratio
   }
 
-  to_obj() {
+  to_obj(): SpriteImage {
     return {
       height: this.real_height(),
       width: this.real_width(),
