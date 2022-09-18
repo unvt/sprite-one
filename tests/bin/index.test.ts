@@ -1,13 +1,20 @@
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
+import child_process from 'child_process'
+import util from 'util'
+const execSync = util.promisify(child_process.exec)
 
-import { generateSprite } from '../src/lib/index'
-import { SpriteImage } from '../src/lib/interfaces'
+import { SpriteImage } from '../../src/lib/interfaces'
 
-describe('text index.ts', (): void => {
+const baseCommand = `${path.join(
+  __dirname,
+  '../../node_modules/.bin/ts-node'
+)} ${path.join(__dirname, '../../src/bin/index.ts')}`
+
+describe('test bin/index.ts', (): void => {
   let tmpDir = ''
-  let iconsDir = path.join(__dirname, 'icons')
+  let iconsDir = path.join(__dirname, '../icons')
 
   beforeAll(function () {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'spriteone-'))
@@ -22,7 +29,13 @@ describe('text index.ts', (): void => {
   test('sprite (json and png) must exist after generating', async () => {
     const output_file_name = path.join(tmpDir, './test1')
     const pixelRatio = 1
-    await generateSprite(output_file_name, iconsDir, pixelRatio)
+
+    const cmd = `${baseCommand} ${output_file_name} ${iconsDir} -r ${pixelRatio}`
+    const { stdout, stderr } = await execSync(cmd, {
+      encoding: 'utf8',
+    })
+    expect(stdout).toEqual('')
+    expect(stderr).toEqual('')
     expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
@@ -38,7 +51,12 @@ describe('text index.ts', (): void => {
   test('sprite must exist with pixelRatio = 2', async () => {
     const output_file_name = path.join(tmpDir, './test2')
     const pixelRatio = 2
-    await generateSprite(output_file_name, iconsDir, pixelRatio)
+    const cmd = `${baseCommand} ${output_file_name} ${iconsDir} -r ${pixelRatio}`
+    const { stdout, stderr } = await execSync(cmd, {
+      encoding: 'utf8',
+    })
+    expect(stdout).toEqual('')
+    expect(stderr).toEqual('')
     expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 

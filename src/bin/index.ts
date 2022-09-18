@@ -16,6 +16,9 @@ program
   )
   .action(async (spriteFilename: string, iconsDirectory: string) => {
     const options = program.opts()
+    if (options.ratio) {
+      options.ratio = Number(options.ratio)
+    }
     await generateSprite(spriteFilename, iconsDirectory, options.ratio)
   })
 
