@@ -2,8 +2,8 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
-import { generateSprite } from '../lib/index'
-import { SpriteImage } from '../lib/interfaces'
+import { generateSprite } from '../src/lib/index'
+import { SpriteImage } from '../src/lib/interfaces'
 
 describe('text index.ts', (): void => {
   let tmpDir = ''
