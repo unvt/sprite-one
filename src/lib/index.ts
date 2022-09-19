@@ -7,7 +7,7 @@ import { SpriteImage } from './interfaces'
 
 const generate = async (
   output_file_name: string,
-  input_directory: string,
+  input_directories: string[],
   ratio: number,
   defaultSpriteName = false
 ) => {
@@ -21,13 +21,15 @@ const generate = async (
   const output_png = `${output_file_name}${spriteName}.png`
   // Get file list
   const images: Image[] = []
-  const files = fs.readdirSync(input_directory)
-  files.forEach((file) => {
-    if (file.match(/[^.]+$/)?.toString() === 'svg') {
-      const svg_file = path.join(input_directory, file)
-      const image = new Image(svg_file, ratio)
-      images.push(image)
-    }
+  input_directories.forEach((input_directory) => {
+    const files = fs.readdirSync(input_directory)
+    files.forEach((file) => {
+      if (file.match(/[^.]+$/)?.toString() === 'svg') {
+        const svg_file = path.join(input_directory, file)
+        const image = new Image(svg_file, ratio)
+        images.push(image)
+      }
+    })
   })
   return Promise.all(images.map((image) => image.parse())).then(
     async (images) => {
@@ -61,13 +63,13 @@ const generate = async (
 
 export const generateSprite = async (
   output_file_name: string,
-  input_directory: string,
+  input_directories: string[],
   ratios: number[] = [1]
 ): Promise<void> => {
   const promises: Promise<void>[] = []
   ratios.forEach((ratio) => {
     promises.push(
-      generate(output_file_name, input_directory, ratio, ratios.length > 1)
+      generate(output_file_name, input_directories, ratio, ratios.length > 1)
     )
   })
   await Promise.all(promises)
