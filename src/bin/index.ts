@@ -11,13 +11,15 @@ program
   .arguments('<icons_directory>')
   .description('generate sprite from icons')
   .option(
-    '-r, --ratio <ratio>',
+    '-r, --ratio <ratios...>',
     'pixel ratio to generate sprite. default is 1.'
   )
   .action(async (spriteFilename: string, iconsDirectory: string) => {
     const options = program.opts()
     if (options.ratio) {
-      options.ratio = Number(options.ratio)
+      options.ratio = options.ratio.map((r: string) => {
+        return Number(r)
+      })
     }
     await generateSprite(spriteFilename, iconsDirectory, options.ratio)
   })
