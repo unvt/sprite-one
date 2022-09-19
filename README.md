@@ -14,6 +14,22 @@ npm install @smellman/sprite-zero
 
 ## Usage
 
+- CLI
+
+```zsh
+$ sprite-one -h
+Usage: sprite-one [options] <sprite_filename> <icons_directory>
+
+generate sprite from icons
+
+Options:
+  -v, --version        output the version number
+  -r, --ratio <ratio>  pixel ratio to generate sprite. default is 1.
+  -h, --help           display help for command
+```
+
+- npm
+
 ```javascript
 import { generateSprite } from '@smellman/sprite-one'
 

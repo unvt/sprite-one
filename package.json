@@ -4,6 +4,9 @@
   "description": "Generate sprite images and json without mapnik",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
+  "bin": {
+    "sprite-one": "dist/bin/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest"
@@ -17,6 +20,7 @@
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.13",
     "@types/sharp": "^0.30.5",
+    "commander": "^9.4.0",
     "jest": "^29.0.3",
     "prettier": "2.7.1",
     "ts-jest": "^29.0.1",

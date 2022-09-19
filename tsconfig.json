@@ -9,5 +9,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "exclude": ["node_modules", "dist", "tests"]
+  "exclude": ["node_modules", "dist", "tests"],
+  "include": ["src/bin/index.ts"]
 }
