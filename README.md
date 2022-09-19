@@ -18,12 +18,13 @@ npm install @smellman/sprite-zero
 
 ```zsh
 $ sprite-one -h
-Usage: sprite-one [options] <sprite_filename> <icons_directory>
+Usage: sprite-one [options] <sprite_filename>
 
 generate sprite from icons
 
 Options:
   -v, --version            output the version number
+  -i, --icon <icons...>    A folder path which stores SVG icons. Multiple folders can be set.
   -r, --ratio <ratios...>  pixel ratio to generate sprite. default is 1.
   -h, --help               display help for command
 ```
@@ -46,6 +47,7 @@ via `bin/index.ts`
 git clone https://github.com/smellman/sprite-one.git
 cd sprite-one
 yarn
-npx ts-node bin/index.ts ../../tmp/out ../../tmp/maki/icons
-npx ts-node bin/index.ts ../../tmp/out ../../tmp/maki/icons --ratio=2
+npx ts-node bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons
+npx ts-node bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons --ratio=2
+npx ts-node bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons --icon ../../tmp/maki/icons2 --ratio=1 --ratio=2
 ```
