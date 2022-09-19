@@ -3,7 +3,7 @@ import os from 'os'
 import path from 'path'
 
 import { generateSprite } from '../../src/lib/index'
-import { SpriteImage } from '../../src/lib/interfaces'
+import { checkRatioInSpriteJson } from '../util'
 
 describe('test lib/index.ts', (): void => {
   let tmpDir = ''
@@ -21,33 +21,39 @@ describe('test lib/index.ts', (): void => {
 
   test('sprite (json and png) must exist after generating', async () => {
     const output_file_name = path.join(tmpDir, './test1')
-    const pixelRatio = 1
-    await generateSprite(output_file_name, iconsDir, pixelRatio)
+    const pixelRatios = [1]
+    await generateSprite(output_file_name, iconsDir, pixelRatios)
     expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
-    const spriteJSON: {
-      [key: string]: SpriteImage
-    } = await require(`${output_file_name}.json`)
-    Object.keys(spriteJSON).forEach((key) => {
-      const json = spriteJSON[key]
-      expect(json.pixelRatio).toBe(pixelRatio)
-    })
+    await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
   })
 
   test('sprite must exist with pixelRatio = 2', async () => {
     const output_file_name = path.join(tmpDir, './test2')
-    const pixelRatio = 2
-    await generateSprite(output_file_name, iconsDir, pixelRatio)
+    const pixelRatios = [2]
+    await generateSprite(output_file_name, iconsDir, pixelRatios)
     expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
-    const spriteJSON: {
-      [key: string]: SpriteImage
-    } = await require(`${output_file_name}.json`)
-    Object.keys(spriteJSON).forEach((key) => {
-      const json = spriteJSON[key]
-      expect(json.pixelRatio).toBe(pixelRatio)
-    })
+    await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
+  })
+
+  test('multiple sprites with different ratio should be generated', async () => {
+    const output_file_name = path.join(tmpDir, './test3')
+    const pixelRatios = [1, 2]
+    await generateSprite(output_file_name, iconsDir, pixelRatios)
+    expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
+    expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
+    expect(fs.existsSync(`${output_file_name}@2x.json`)).toBeTruthy()
+    expect(fs.existsSync(`${output_file_name}@2x.png`)).toBeTruthy()
+
+    for (let i = 0; i < pixelRatios.length; i++) {
+      const ratio = pixelRatios[i]
+      await checkRatioInSpriteJson(
+        `${output_file_name}${ratio > 1 ? `@${ratio}x` : ''}.json`,
+        ratio
+      )
+    }
   })
 })

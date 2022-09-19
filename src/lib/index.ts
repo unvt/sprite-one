@@ -5,13 +5,20 @@ import { Matrix } from './matrix'
 import sharp from 'sharp'
 import { SpriteImage } from './interfaces'
 
-export const generateSprite = async (
+const generate = async (
   output_file_name: string,
   input_directory: string,
-  ratio = 1
-): Promise<void> => {
-  const output_json = `${output_file_name}.json`
-  const output_png = `${output_file_name}.png`
+  ratio: number,
+  defaultSpriteName = false
+) => {
+  let spriteName = ''
+  if (defaultSpriteName === true) {
+    if (ratio > 1) {
+      spriteName = `@${ratio}x`
+    }
+  }
+  const output_json = `${output_file_name}${spriteName}.json`
+  const output_png = `${output_file_name}${spriteName}.png`
   // Get file list
   const images: Image[] = []
   const files = fs.readdirSync(input_directory)
@@ -50,4 +57,18 @@ export const generateSprite = async (
       fs.writeFileSync(output_json, JSON.stringify(json))
     }
   )
+}
+
+export const generateSprite = async (
+  output_file_name: string,
+  input_directory: string,
+  ratios: number[] = [1]
+): Promise<void> => {
+  const promises: Promise<void>[] = []
+  ratios.forEach((ratio) => {
+    promises.push(
+      generate(output_file_name, input_directory, ratio, ratios.length > 1)
+    )
+  })
+  await Promise.all(promises)
 }

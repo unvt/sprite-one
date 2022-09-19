@@ -5,7 +5,7 @@ import child_process from 'child_process'
 import util from 'util'
 const execSync = util.promisify(child_process.exec)
 
-import { SpriteImage } from '../../src/lib/interfaces'
+import { checkRatioInSpriteJson } from '../util'
 
 const baseCommand = `${path.join(
   __dirname,
@@ -39,13 +39,7 @@ describe('test bin/index.ts', (): void => {
     expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
-    const spriteJSON: {
-      [key: string]: SpriteImage
-    } = await require(`${output_file_name}.json`)
-    Object.keys(spriteJSON).forEach((key) => {
-      const json = spriteJSON[key]
-      expect(json.pixelRatio).toBe(pixelRatio)
-    })
+    await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatio)
   })
 
   test('sprite must exist with pixelRatio = 2', async () => {
@@ -60,12 +54,29 @@ describe('test bin/index.ts', (): void => {
     expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
-    const spriteJSON: {
-      [key: string]: SpriteImage
-    } = await require(`${output_file_name}.json`)
-    Object.keys(spriteJSON).forEach((key) => {
-      const json = spriteJSON[key]
-      expect(json.pixelRatio).toBe(pixelRatio)
+    await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatio)
+  })
+
+  test('multiple sprites with different ratio should be generated', async () => {
+    const output_file_name = path.join(tmpDir, './test3')
+    const pixelRatios = [1, 2]
+    const cmd = `${baseCommand} ${output_file_name} ${iconsDir} -r ${pixelRatios[0]} -r ${pixelRatios[1]}`
+    const { stdout, stderr } = await execSync(cmd, {
+      encoding: 'utf8',
     })
+    expect(stdout).toEqual('')
+    expect(stderr).toEqual('')
+    expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
+    expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
+    expect(fs.existsSync(`${output_file_name}@2x.json`)).toBeTruthy()
+    expect(fs.existsSync(`${output_file_name}@2x.png`)).toBeTruthy()
+
+    for (let i = 0; i < pixelRatios.length; i++) {
+      const ratio = pixelRatios[i]
+      await checkRatioInSpriteJson(
+        `${output_file_name}${ratio > 1 ? `@${ratio}x` : ''}.json`,
+        ratio
+      )
+    }
   })
 })

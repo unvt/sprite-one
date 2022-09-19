@@ -23,9 +23,9 @@ Usage: sprite-one [options] <sprite_filename> <icons_directory>
 generate sprite from icons
 
 Options:
-  -v, --version        output the version number
-  -r, --ratio <ratio>  pixel ratio to generate sprite. default is 1.
-  -h, --help           display help for command
+  -v, --version            output the version number
+  -r, --ratio <ratios...>  pixel ratio to generate sprite. default is 1.
+  -h, --help               display help for command
 ```
 
 - npm
@@ -33,8 +33,10 @@ Options:
 ```javascript
 import { generateSprite } from '@smellman/sprite-one'
 
-generateSprite('../out', '../input', 2).then(() => {})
+generateSprite('../out', '../input', [2]).then(() => {})
 ```
+
+If multiple ratios are specified in either CLI or Nodejs, the default file names when the ratio is more than one will be changed to the standard file name used by mapbox and maplibre (e.g., `sprite.json` for 1 ratio, `sprite@2x.json` for 2 ratio...).
 
 ## Develop
 
