@@ -1,6 +1,6 @@
 {
-  "name": "@smellman/sprite-one",
-  "version": "0.0.3",
+  "name": "@unvt/sprite-one",
+  "version": "0.0.5",
   "description": "Generate sprite images and json without mapnik",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",

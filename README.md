@@ -3,13 +3,13 @@
 ## Install
 
 ```bash
-yarn add @smellman/sprite-zero
+yarn add @unvt/sprite-zero
 ```
 
 or
 
 ```bash
-npm install @smellman/sprite-zero
+npm install @unvt/sprite-zero
 ```
 
 ## Usage
@@ -32,7 +32,7 @@ Options:
 - npm
 
 ```javascript
-import { generateSprite } from '@smellman/sprite-one'
+import { generateSprite } from '@unvt/sprite-one'
 
 generateSprite('../out', '../input', [2]).then(() => {})
 ```
@@ -44,7 +44,7 @@ If multiple ratios are specified in either CLI or Nodejs, the default file names
 via `bin/index.ts`
 
 ```bash
-git clone https://github.com/smellman/sprite-one.git
+git clone https://github.com/unvt/sprite-one.git
 cd sprite-one
 yarn
 npx ts-node bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons
