@@ -3,13 +3,13 @@
 ## Install
 
 ```bash
-yarn add @unvt/sprite-zero
+yarn add @unvt/sprite-one
 ```
 
 or
 
 ```bash
-npm install @unvt/sprite-zero
+npm install @unvt/sprite-one
 ```
 
 ## Usage
