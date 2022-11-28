@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import { SpriteImage } from '../../src/lib/interfaces'
 
 export const checkIconCountInSpriteJson = async (
@@ -6,6 +7,6 @@ export const checkIconCountInSpriteJson = async (
 ) => {
   const spriteJSON: {
     [key: string]: SpriteImage
-  } = await require(output)
+  } = JSON.parse(await fs.promises.readFile(output, 'utf-8'))
   expect(Object.keys(spriteJSON).length).toBe(iconCount)
 }

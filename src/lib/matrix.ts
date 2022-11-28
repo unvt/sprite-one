@@ -1,3 +1,4 @@
+import binPack from 'bin-pack'
 import { Image } from './image'
 
 export class Matrix {
@@ -11,37 +12,18 @@ export class Matrix {
   }
 
   calc() {
-    this.images.forEach((image) => {
-      image.x = this.position_x
-      image.y = this.position_y
-      this._set_next_position(image)
-    })
-  }
-
-  _set_next_position(image: Image) {
-    if (this.position_y < this.max_y || this.position_y === 0) {
-      this.position_y += image.real_height()
-      if (this.max_x < this.position_x + image.real_width()) {
-        this.max_x += image.real_width()
+    const result = binPack(this.images.map(image => {
+      return {
+        image,
+        width: image.real_width(),
+        height: image.real_height(),
       }
-      if (this.position_y >= this.max_y) {
-        this.position_x = 0
-        this.max_y = this.position_y
-      }
-    } else if (this.position_x < this.max_x) {
-      this.position_x += image.real_width()
-      if (this.position_x > this.max_x) {
-        this.max_x = this.position_x
-      }
-    } else {
-      if (this.max_y <= this.position_y + image.real_height()) {
-        this.max_y += image.real_height()
-      }
-      this.position_y = 0
-      if (this.max_x <= this.position_x + image.real_width()) {
-        this.max_x += image.real_width()
-      }
-      this.position_x = this.max_x
+    }))
+    this.max_x = result.width
+    this.max_y = result.height
+    for (const obj of result.items) {
+      obj.item.image.x = obj.x
+      obj.item.image.y = obj.y
     }
   }
 }

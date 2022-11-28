@@ -41,7 +41,7 @@ describe('test bin/index.ts', (): void => {
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatio)
-    await checkIconCountInSpriteJson(`${output_file_name}.json`, 1)
+    await checkIconCountInSpriteJson(`${output_file_name}.json`, 2)
   })
 
   test('sprite must exist with pixelRatio = 2', async () => {
@@ -57,7 +57,7 @@ describe('test bin/index.ts', (): void => {
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatio)
-    await checkIconCountInSpriteJson(`${output_file_name}.json`, 1)
+    await checkIconCountInSpriteJson(`${output_file_name}.json`, 2)
   })
 
   test('multiple sprites with different ratio should be generated', async () => {
@@ -80,7 +80,7 @@ describe('test bin/index.ts', (): void => {
         ratio > 1 ? `@${ratio}x` : ''
       }.json`
       await checkRatioInSpriteJson(jsonName, ratio)
-      await checkIconCountInSpriteJson(jsonName, 1)
+      await checkIconCountInSpriteJson(jsonName, 2)
     }
   })
 
@@ -97,6 +97,6 @@ describe('test bin/index.ts', (): void => {
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
-    await checkIconCountInSpriteJson(`${output_file_name}.json`, 3)
+    await checkIconCountInSpriteJson(`${output_file_name}.json`, 4)
   })
 })
