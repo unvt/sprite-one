@@ -11,36 +11,31 @@ const icons2Dir = path.join(__dirname, '../icons2')
 // ]
 
 describe('test lib/matrix.ts', (): void => {
-  test('matrix calculation works with 1 image', async () => {
-    const images1 = [
-      await new Image(path.join(iconsDir, 'airport.svg'), 1).parse(),
-      // await new Image(path.join(iconsDir, 'airport2.svg'), 1).parse(),
-    ]
+  // test('matrix calculation works with 1 image', async () => {
+  //   const images1 = [
+  //     await new Image(path.join(iconsDir, 'airport.svg'), 1).parse(),
+  //     // await new Image(path.join(iconsDir, 'airport2.svg'), 1).parse(),
+  //   ]
 
-    expect(images1[0].height).toStrictEqual(15);
-    expect(images1[0].width).toStrictEqual(15);
+  //   expect(images1[0].height).toStrictEqual(15);
+  //   expect(images1[0].width).toStrictEqual(15);
 
-    const matrix = new Matrix(images1)
-    matrix.calc()
-    
-    expect(matrix.max_x).toStrictEqual(15);
-    expect(matrix.max_y).toStrictEqual(15);
-  })
+  //   const matrix = new Matrix(images1)
+  //   matrix.calc()
+
+  //   expect(matrix.max_x).toStrictEqual(15);
+  //   expect(matrix.max_y).toStrictEqual(15);
+  // })
 
   test('matrix calculation works with 2 images', async () => {
     const images1 = [
       await new Image(path.join(iconsDir, 'airport.svg'), 1).parse(),
-      await new Image(path.join(iconsDir, 'airport2.svg'), 1).parse(),
+      await new Image(path.join(iconsDir, 'airport.svg'), 1, 'airport2').parse(),
     ]
-
-    expect(images1[0].height).toStrictEqual(15);
-    expect(images1[0].width).toStrictEqual(15);
-    expect(images1[1].height).toStrictEqual(15);
-    expect(images1[1].width).toStrictEqual(15);
 
     const matrix = new Matrix(images1)
     matrix.calc()
-    
+
     expect(matrix.max_x).toStrictEqual(15);
     expect(matrix.max_y).toStrictEqual(30);
   })

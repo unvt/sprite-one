@@ -12,9 +12,9 @@ export class Image {
 
   x = 0
   y = 0
-  constructor(svg_file: string, ratio: number) {
+  constructor(svg_file: string, ratio: number, name?: string) {
     this.svg_file = svg_file
-    this.name = svg_file.match(/([^/]*)\./)![1]
+    this.name = typeof name !== 'undefined' ? name : svg_file.match(/([^/]*)\./)![1]
     this.ratio = ratio
   }
 
