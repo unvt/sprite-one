@@ -1,6 +1,6 @@
 {
   "name": "@unvt/sprite-one",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Generate sprite images and json without mapnik",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
