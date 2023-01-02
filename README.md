@@ -1,5 +1,9 @@
 # Generate sprite image and json without Mapnik
 
+* SVG and PNG icon inputs
+* Multiple pixel ratio support
+* Uses `sharp` for rendering (compatibility with newer Node.js versions and architectures)
+
 ## Install
 
 ```bash
@@ -37,7 +41,18 @@ import { generateSprite } from '@unvt/sprite-one'
 generateSprite('../out', '../input', [2]).then(() => {})
 ```
 
-If multiple ratios are specified in either CLI or Nodejs, the default file names when the ratio is more than one will be changed to the standard file name used by mapbox and maplibre (e.g., `sprite.json` for 1 ratio, `sprite@2x.json` for 2 ratio...).
+If multiple ratios are specified in either CLI or Node.js, the default file names when the ratio is more than one will be changed to the standard file name used by Mapbox and MapLibre (e.g., `sprite.json` for 1 ratio, `sprite@2x.json` for 2 ratio...).
+
+### Multiple pixel ratio support
+
+You can supply mulitple pixel ratio versions of the same icon in the directory by using the following naming convention:
+
+* `[name].png` or `[name].svg` -- the default icon
+* `[name]@2x.png` or `[name]@2x.svg` -- the icon to use in the 2x spritesheet
+
+If the `@2x` version doesn't exist, the default icon will be used and scaled up appropriately. If you are using PNG icons, it is strongly recommended that you prepare alternate versions for each pixel ratio you require.
+
+Note that while this feature is supported for SVG icons, this is usually unneccesary because SVG, as a vector format, can be scaled without problems.
 
 ## Develop
 

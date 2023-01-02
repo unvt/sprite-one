@@ -28,7 +28,7 @@ describe('test lib/index.ts', (): void => {
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
-    await checkIconCountInSpriteJson(`${output_file_name}.json`, 2)
+    await checkIconCountInSpriteJson(`${output_file_name}.json`, 3)
     await checkFileMatchesFixture(`${output_file_name}.png`)
     await checkFileMatchesFixture(`${output_file_name}.json`)
   })
@@ -41,7 +41,7 @@ describe('test lib/index.ts', (): void => {
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
-    await checkIconCountInSpriteJson(`${output_file_name}.json`, 2)
+    await checkIconCountInSpriteJson(`${output_file_name}.json`, 3)
     await checkFileMatchesFixture(`${output_file_name}.png`)
     await checkFileMatchesFixture(`${output_file_name}.json`)
   })
@@ -62,7 +62,7 @@ describe('test lib/index.ts', (): void => {
       }`
       const jsonName = `${name}.json`
       await checkRatioInSpriteJson(jsonName, ratio)
-      await checkIconCountInSpriteJson(jsonName, 2)
+      await checkIconCountInSpriteJson(jsonName, 3)
       await checkFileMatchesFixture(`${name}.png`)
       await checkFileMatchesFixture(jsonName)
     }
@@ -76,7 +76,7 @@ describe('test lib/index.ts', (): void => {
     expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
 
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
-    await checkIconCountInSpriteJson(`${output_file_name}.json`, 4)
+    await checkIconCountInSpriteJson(`${output_file_name}.json`, 5)
     await checkFileMatchesFixture(`${output_file_name}.png`)
     await checkFileMatchesFixture(`${output_file_name}.json`)
   })
