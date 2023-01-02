@@ -20,17 +20,45 @@ const generate = async (
   const output_json = `${output_file_name}${spriteName}.json`
   const output_png = `${output_file_name}${spriteName}.png`
   // Get file list
-  const images: Image[] = []
-  input_directories.forEach((input_directory) => {
-    const files = fs.readdirSync(input_directory)
-    files.forEach((file) => {
-      if (file.match(/[^.]+$/)?.toString() === 'svg') {
-        const svg_file = path.join(input_directory, file)
-        const image = new Image(svg_file, ratio)
-        images.push(image)
+  let images: Image[] = []
+  for (const input_directory of input_directories) {
+    const files = await fs.promises.readdir(input_directory)
+
+    // If there are multiple icons with the same name but with different pixel ratios
+    // (such as icon.png, icon@2x.png), we will group them together and use the appropriate
+    // file without scaling. If multiple icons do not exist, we will use the single icon
+    // and scale as necessary (for example, when the icon is SVG)
+
+    const dir_file_sets: { [key: string]: {file_ratio: number, file: string}[] } = {}
+    for (const file of files) {
+      const extname = path.extname(file)               // .svg, .png
+      if (extname !== '.svg' && extname !== '.png') {
+        // we only support SVG and PNG files right now.
+        continue;
       }
-    })
-  })
+      const basename = path.basename(file, extname)    // icon, icon@2x
+      const icon_name = basename.replace(/@\d+x$/, '') // icon, icon
+      const ratio_match = basename.match(/@(\d+)x$/)
+      const file_ratio = ratio_match ? parseInt(ratio_match[1], 10) : 1
+      const icon_filenames = dir_file_sets[icon_name] || []
+      dir_file_sets[icon_name] = [...icon_filenames, {file_ratio, file}]
+    }
+
+    for (const [icon_name, file_set] of Object.entries(dir_file_sets)) {
+      const file_at_ratio = file_set.find(x => x.file_ratio === ratio) || file_set.find(x => x.file_ratio === 1)
+      if (!file_at_ratio) continue;
+
+      const source_file = path.join(input_directory, file_at_ratio.file)
+      const image = new Image(
+        source_file,
+        ratio,
+        icon_name,
+        file_at_ratio.file_ratio,
+      )
+      images.push(image)
+    }
+  }
+
   return Promise.all(images.map((image) => image.parse())).then(
     async (images) => {
       images.sort((a, b) => a.range - b.range)
@@ -38,7 +66,7 @@ const generate = async (
       matrix.calc()
       // output png
       const inputs = images.map((image) => {
-        return { input: image.svg_obj!, top: image.y, left: image.x }
+        return { input: image.rendered_image!, top: image.y, left: image.x }
       })
       await sharp({
         create: {
