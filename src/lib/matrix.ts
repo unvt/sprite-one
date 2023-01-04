@@ -12,13 +12,15 @@ export class Matrix {
   }
 
   calc() {
-    const result = binPack(this.images.map(image => {
-      return {
-        image,
-        width: image.real_width(),
-        height: image.real_height(),
-      }
-    }))
+    const result = binPack(
+      this.images.map((image) => {
+        return {
+          image,
+          width: image.real_width(),
+          height: image.real_height(),
+        }
+      })
+    )
     this.max_x = result.width
     this.max_y = result.height
     for (const obj of result.items) {

@@ -1,4 +1,3 @@
-import path from 'node:path'
 import sharp from 'sharp'
 import { SpriteImage } from './interfaces'
 
@@ -14,14 +13,21 @@ export class Image {
 
   x = 0
   y = 0
-  constructor(source_file: string, ratio: number, name: string, file_ratio?: number) {
+  constructor(
+    source_file: string,
+    ratio: number,
+    name: string,
+    file_ratio?: number
+  ) {
     this.source_file = source_file
     this.name = name
     this.ratio = ratio
     this.file_ratio = file_ratio || 1
 
     if (this.file_ratio > 1 && this.ratio !== this.file_ratio) {
-      throw new Error(`If the file_ratio is not 1, it must be equal to the ratio`)
+      throw new Error(
+        `If the file_ratio is not 1, it must be equal to the ratio`
+      )
     }
   }
 
@@ -33,12 +39,12 @@ export class Image {
 
     this.rendered_image
     const intermediate_image = sharp(this.source_file)
-    if (this.real_height() !== this.height || this.real_width() !== this.width) {
+    if (
+      this.real_height() !== this.height ||
+      this.real_width() !== this.width
+    ) {
       this.rendered_image = await intermediate_image
-        .resize(
-          this.real_width(),
-          this.real_height(),
-        )
+        .resize(this.real_width(), this.real_height())
         .toBuffer()
     } else {
       // because the image is already at the specified size, we can use it directly.
