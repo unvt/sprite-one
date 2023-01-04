@@ -9,7 +9,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "prettier": "prettier --check 'src/**/*.ts' 'tests/**/*.ts'",
+    "prettier:write": "prettier --write 'src/**/*.ts' 'tests/**/*.ts'"
   },
   "author": "Taro Matsuzawa",
   "license": "MIT",
