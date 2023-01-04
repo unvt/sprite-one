@@ -9,7 +9,7 @@ import { checkIconCountInSpriteJson, checkRatioInSpriteJson } from '../util'
 
 const baseCommand = `${path.join(
   __dirname,
-  '../../node_modules/.bin/ts-node'
+  '../../node_modules/.bin/ts-node',
 )} ${path.join(__dirname, '../../src/bin/index.ts')}`
 
 describe('test bin/index.ts', (): void => {

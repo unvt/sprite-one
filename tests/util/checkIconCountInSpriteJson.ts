@@ -3,7 +3,7 @@ import { SpriteImage } from '../../src/lib/interfaces'
 
 export const checkIconCountInSpriteJson = async (
   output: string,
-  iconCount: number
+  iconCount: number,
 ) => {
   const spriteJSON: {
     [key: string]: SpriteImage

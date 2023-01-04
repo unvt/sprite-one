@@ -11,11 +11,11 @@ program
   .description('generate sprite from icons')
   .requiredOption(
     '-i, --icon <icons...>',
-    'A folder path which stores SVG icons. Multiple folders can be set.'
+    'A folder path which stores SVG icons. Multiple folders can be set.',
   )
   .option(
     '-r, --ratio <ratios...>',
-    'pixel ratio to generate sprite. default is 1.'
+    'pixel ratio to generate sprite. default is 1.',
   )
   .action(async (spriteFilename: string) => {
     const options = program.opts()

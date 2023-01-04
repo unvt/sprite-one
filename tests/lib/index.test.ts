@@ -3,7 +3,11 @@ import os from 'os'
 import path from 'path'
 
 import { generateSprite } from '../../src/lib/index'
-import { checkFileMatchesFixture, checkIconCountInSpriteJson, checkRatioInSpriteJson } from '../util'
+import {
+  checkFileMatchesFixture,
+  checkIconCountInSpriteJson,
+  checkRatioInSpriteJson,
+} from '../util'
 import { checkIconsExistInSpritesheet } from '../util/checkIconsExistsInSpritesheet'
 
 describe('test lib/index.ts', (): void => {
@@ -11,7 +15,7 @@ describe('test lib/index.ts', (): void => {
   let iconsDir = path.join(__dirname, '../icons')
   let icons2Dir = path.join(__dirname, '../icons2')
   let iconsMakiDir = path.join(__dirname, '../icons-maki')
-  let iconsVariedDir = path.join(__dirname, '../icons-varied')
+  // let iconsVariedDir = path.join(__dirname, '../icons-varied')
 
   beforeAll(function () {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'spriteone-'))
@@ -35,7 +39,10 @@ describe('test lib/index.ts', (): void => {
     await checkFileMatchesFixture(`${output_file_name}.png`)
     await checkFileMatchesFixture(`${output_file_name}.json`)
 
-    await checkIconsExistInSpritesheet(`${output_file_name}.json`, `${output_file_name}.png`);
+    await checkIconsExistInSpritesheet(
+      `${output_file_name}.json`,
+      `${output_file_name}.png`,
+    )
   })
 
   test('sprite must exist with pixelRatio = 2', async () => {
@@ -50,7 +57,10 @@ describe('test lib/index.ts', (): void => {
     await checkFileMatchesFixture(`${output_file_name}.png`)
     await checkFileMatchesFixture(`${output_file_name}.json`)
 
-    await checkIconsExistInSpritesheet(`${output_file_name}.json`, `${output_file_name}.png`);
+    await checkIconsExistInSpritesheet(
+      `${output_file_name}.json`,
+      `${output_file_name}.png`,
+    )
   })
 
   test('multiple sprites with different ratio should be generated', async () => {
@@ -64,16 +74,14 @@ describe('test lib/index.ts', (): void => {
 
     for (let i = 0; i < pixelRatios.length; i++) {
       const ratio = pixelRatios[i]
-      const name = `${output_file_name}${
-        ratio > 1 ? `@${ratio}x` : ''
-      }`
+      const name = `${output_file_name}${ratio > 1 ? `@${ratio}x` : ''}`
       const jsonName = `${name}.json`
       await checkRatioInSpriteJson(jsonName, ratio)
       await checkIconCountInSpriteJson(jsonName, 3)
       await checkFileMatchesFixture(`${name}.png`)
       await checkFileMatchesFixture(jsonName)
 
-      await checkIconsExistInSpritesheet(jsonName, `${name}.png`);
+      await checkIconsExistInSpritesheet(jsonName, `${name}.png`)
     }
   })
 
@@ -89,7 +97,10 @@ describe('test lib/index.ts', (): void => {
     await checkFileMatchesFixture(`${output_file_name}.png`)
     await checkFileMatchesFixture(`${output_file_name}.json`)
 
-    await checkIconsExistInSpritesheet(`${output_file_name}.json`, `${output_file_name}.png`);
+    await checkIconsExistInSpritesheet(
+      `${output_file_name}.json`,
+      `${output_file_name}.png`,
+    )
   })
 
   test('sprite works with maki icon set', async () => {
@@ -107,13 +118,19 @@ describe('test lib/index.ts', (): void => {
     await checkFileMatchesFixture(`${output_file_name}.png`)
     await checkFileMatchesFixture(`${output_file_name}.json`)
 
-    await checkIconsExistInSpritesheet(`${output_file_name}.json`, `${output_file_name}.png`);
+    await checkIconsExistInSpritesheet(
+      `${output_file_name}.json`,
+      `${output_file_name}.png`,
+    )
 
     await checkRatioInSpriteJson(`${output_file_name}@2x.json`, pixelRatios[1])
     await checkIconCountInSpriteJson(`${output_file_name}@2x.json`, 211)
     await checkFileMatchesFixture(`${output_file_name}@2x.png`)
     await checkFileMatchesFixture(`${output_file_name}@2x.json`)
 
-    await checkIconsExistInSpritesheet(`${output_file_name}@2x.json`, `${output_file_name}@2x.png`);
+    await checkIconsExistInSpritesheet(
+      `${output_file_name}@2x.json`,
+      `${output_file_name}@2x.png`,
+    )
   })
 })

@@ -1,8 +1,8 @@
 # Generate sprite image and json without Mapnik
 
-* SVG and PNG icon inputs
-* Multiple pixel ratio support
-* Uses `sharp` for rendering (compatibility with newer Node.js versions and architectures)
+- SVG and PNG icon inputs
+- Multiple pixel ratio support
+- Uses `sharp` for rendering (compatibility with newer Node.js versions and architectures)
 
 ## Install
 
@@ -47,8 +47,8 @@ If multiple ratios are specified in either CLI or Node.js, the default file name
 
 You can supply mulitple pixel ratio versions of the same icon in the directory by using the following naming convention:
 
-* `[name].png` or `[name].svg` -- the default icon
-* `[name]@2x.png` or `[name]@2x.svg` -- the icon to use in the 2x spritesheet
+- `[name].png` or `[name].svg` -- the default icon
+- `[name]@2x.png` or `[name]@2x.svg` -- the icon to use in the 2x spritesheet
 
 If the `@2x` version doesn't exist, the default icon will be used and scaled up appropriately. If you are using PNG icons, it is strongly recommended that you prepare alternate versions for each pixel ratio you require.
 
@@ -62,7 +62,7 @@ via `bin/index.ts`
 git clone https://github.com/unvt/sprite-one.git
 cd sprite-one
 yarn
-npx ts-node bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons
-npx ts-node bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons --ratio=2
-npx ts-node bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons --icon ../../tmp/maki/icons2 --ratio=1 --ratio=2
+npx ts-node src/bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons
+npx ts-node src/bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons --ratio=2
+npx ts-node src/bin/index.ts ../../tmp/out --icon ../../tmp/maki/icons --icon ../../tmp/maki/icons2 --ratio=1 --ratio=2
 ```
