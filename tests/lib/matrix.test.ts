@@ -33,7 +33,7 @@ describe('test lib/matrix.ts', (): void => {
       await new Image(
         path.join(iconsDir, 'airport.svg'),
         1,
-        'airport2'
+        'airport2',
       ).parse(),
     ]
 

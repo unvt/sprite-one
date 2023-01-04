@@ -14,7 +14,7 @@ export const checkFileMatchesFixture = async (filePath: string) => {
   const basename = path.basename(filePath)
   const fixturePath = path.join(__dirname, '..', 'fixtures', basename)
   const [fileHash, fixtureHash] = await Promise.all(
-    [filePath, fixturePath].map((x) => _md5hash(x))
+    [filePath, fixturePath].map((x) => _md5hash(x)),
   )
   expect(fileHash).toStrictEqual(fixtureHash)
 }

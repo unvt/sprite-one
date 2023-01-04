@@ -19,7 +19,7 @@ export class Matrix {
           width: image.real_width(),
           height: image.real_height(),
         }
-      })
+      }),
     )
     this.max_x = result.width
     this.max_y = result.height

@@ -41,7 +41,7 @@ describe('test lib/index.ts', (): void => {
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}.json`,
-      `${output_file_name}.png`
+      `${output_file_name}.png`,
     )
   })
 
@@ -59,7 +59,7 @@ describe('test lib/index.ts', (): void => {
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}.json`,
-      `${output_file_name}.png`
+      `${output_file_name}.png`,
     )
   })
 
@@ -99,7 +99,7 @@ describe('test lib/index.ts', (): void => {
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}.json`,
-      `${output_file_name}.png`
+      `${output_file_name}.png`,
     )
   })
 
@@ -120,7 +120,7 @@ describe('test lib/index.ts', (): void => {
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}.json`,
-      `${output_file_name}.png`
+      `${output_file_name}.png`,
     )
 
     await checkRatioInSpriteJson(`${output_file_name}@2x.json`, pixelRatios[1])
@@ -130,7 +130,7 @@ describe('test lib/index.ts', (): void => {
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}@2x.json`,
-      `${output_file_name}@2x.png`
+      `${output_file_name}@2x.png`,
     )
   })
 })

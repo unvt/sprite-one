@@ -4,7 +4,7 @@ import sharp from 'sharp'
 
 export const checkIconsExistInSpritesheet = async (
   spriteJson: string,
-  spriteSheet: string
+  spriteSheet: string,
 ) => {
   const json: {
     [key: string]: SpriteImage

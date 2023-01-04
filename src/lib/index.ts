@@ -9,7 +9,7 @@ const generate = async (
   output_file_name: string,
   input_directories: string[],
   ratio: number,
-  defaultSpriteName = false
+  defaultSpriteName = false,
 ) => {
   let spriteName = ''
   if (defaultSpriteName === true) {
@@ -57,7 +57,7 @@ const generate = async (
         source_file,
         ratio,
         icon_name,
-        file_at_ratio.file_ratio
+        file_at_ratio.file_ratio,
       )
       images.push(image)
     }
@@ -89,19 +89,19 @@ const generate = async (
         json[image.name] = image.to_obj()
       })
       fs.writeFileSync(output_json, JSON.stringify(json))
-    }
+    },
   )
 }
 
 export const generateSprite = async (
   output_file_name: string,
   input_directories: string[],
-  ratios: number[] = [1]
+  ratios: number[] = [1],
 ): Promise<void> => {
   const promises: Promise<void>[] = []
   ratios.forEach((ratio) => {
     promises.push(
-      generate(output_file_name, input_directories, ratio, ratios.length > 1)
+      generate(output_file_name, input_directories, ratio, ratios.length > 1),
     )
   })
   await Promise.all(promises)

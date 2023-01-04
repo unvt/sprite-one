@@ -17,7 +17,7 @@ export class Image {
     source_file: string,
     ratio: number,
     name: string,
-    file_ratio?: number
+    file_ratio?: number,
   ) {
     this.source_file = source_file
     this.name = name
@@ -26,7 +26,7 @@ export class Image {
 
     if (this.file_ratio > 1 && this.ratio !== this.file_ratio) {
       throw new Error(
-        `If the file_ratio is not 1, it must be equal to the ratio`
+        `If the file_ratio is not 1, it must be equal to the ratio`,
       )
     }
   }
