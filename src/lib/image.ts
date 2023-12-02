@@ -9,6 +9,7 @@ export class Image {
   width = 0
   height = 0
   range = 1
+  buffer_length = 3
   rendered_image: Buffer | null = null
   sdf = false
 
@@ -52,6 +53,23 @@ export class Image {
       // because the image is already at the specified size, we can use it directly.
       this.rendered_image = await intermediate_image.toBuffer()
     }
+    // add buffer
+    this.rendered_image = await sharp({
+        create: {
+          width: this.buffer_width(),
+          height: this.buffer_height(),
+          channels: 4,
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
+        },
+      })
+      .composite([{
+        input: this.rendered_image!,
+        top: this.buffer_length,
+        left: this.buffer_length,
+      }])
+      .png()
+      .toBuffer()
+
     if (sdf) {
       const radius = 8
       const img = this.rendered_image
@@ -67,15 +85,15 @@ export class Image {
       })
       const inner_df = alphas.map((alpha) => {
         if (alpha === 255) return Number.MAX_VALUE
-        return Math.max(0, 0.5 - ((255 - alpha) / 255))**2
+        return Math.max(0, (alpha / 255) - 0.5)**2
       })
-      for (let col = 0; col < this.real_width(); col++) {
-        dt(outer_df, col, this.real_width(), this.real_height())
-        dt(inner_df, col, this.real_width(), this.real_height())
+      for (let col = 0; col < this.buffer_width(); col++) {
+        dt(outer_df, col, this.buffer_width(), this.buffer_height())
+        dt(inner_df, col, this.buffer_width(), this.buffer_height())
       }
-      for (let row = 0; row < this.real_height(); row++) {
-        dt(outer_df, row * this.real_width(), 1, this.real_width())
-        dt(inner_df, row * this.real_width(), 1, this.real_width())
+      for (let row = 0; row < this.buffer_height(); row++) {
+        dt(outer_df, row * this.buffer_width(), 1, this.buffer_width())
+        dt(inner_df, row * this.buffer_width(), 1, this.buffer_width())
       }
       const result = outer_df.map((outerDfValue, index) => {
         const innerDfValue = inner_df[index]
@@ -87,8 +105,8 @@ export class Image {
       const buffer = Buffer.from(normalizedData)
       this.rendered_image = await sharp(buffer, {
         raw: {
-          width: this.real_width(),
-          height: this.real_height(),
+          width: this.buffer_width(),
+          height: this.buffer_height(),
           channels: 1
         }
       }).png().toBuffer()
@@ -104,10 +122,18 @@ export class Image {
     return Math.round((this.height / this.file_ratio) * this.ratio)
   }
 
+  buffer_width() {
+    return this.real_width() + this.buffer_length * 2
+  }
+
+  buffer_height() {
+    return this.real_height() + this.buffer_length * 2
+  }
+
   to_obj(): SpriteImage {
     return {
-      height: this.real_height(),
-      width: this.real_width(),
+      height: this.buffer_height(),
+      width: this.buffer_width(),
       x: this.x,
       y: this.y,
       pixelRatio: this.ratio,
