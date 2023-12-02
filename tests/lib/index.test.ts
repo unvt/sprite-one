@@ -7,6 +7,7 @@ import {
   checkFileMatchesFixture,
   checkIconCountInSpriteJson,
   checkRatioInSpriteJson,
+  checkJSONFileMatchesFixture,
 } from '../util'
 import { checkIconsExistInSpritesheet } from '../util/checkIconsExistsInSpritesheet'
 
@@ -16,6 +17,7 @@ describe('test lib/index.ts', (): void => {
   let icons2Dir = path.join(__dirname, '../icons2')
   let iconsMakiDir = path.join(__dirname, '../icons-maki')
   // let iconsVariedDir = path.join(__dirname, '../icons-varied')
+  let iconsSDFDir = path.join(__dirname, '../icons-sdf')
 
   beforeAll(function () {
     tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'spriteone-'))
@@ -37,7 +39,7 @@ describe('test lib/index.ts', (): void => {
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
     await checkIconCountInSpriteJson(`${output_file_name}.json`, 3)
     await checkFileMatchesFixture(`${output_file_name}.png`)
-    await checkFileMatchesFixture(`${output_file_name}.json`)
+    await checkJSONFileMatchesFixture(`${output_file_name}.json`)
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}.json`,
@@ -55,7 +57,7 @@ describe('test lib/index.ts', (): void => {
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
     await checkIconCountInSpriteJson(`${output_file_name}.json`, 3)
     await checkFileMatchesFixture(`${output_file_name}.png`)
-    await checkFileMatchesFixture(`${output_file_name}.json`)
+    await checkJSONFileMatchesFixture(`${output_file_name}.json`)
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}.json`,
@@ -79,7 +81,7 @@ describe('test lib/index.ts', (): void => {
       await checkRatioInSpriteJson(jsonName, ratio)
       await checkIconCountInSpriteJson(jsonName, 3)
       await checkFileMatchesFixture(`${name}.png`)
-      await checkFileMatchesFixture(jsonName)
+      await checkJSONFileMatchesFixture(jsonName)
 
       await checkIconsExistInSpritesheet(jsonName, `${name}.png`)
     }
@@ -95,7 +97,7 @@ describe('test lib/index.ts', (): void => {
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
     await checkIconCountInSpriteJson(`${output_file_name}.json`, 5)
     await checkFileMatchesFixture(`${output_file_name}.png`)
-    await checkFileMatchesFixture(`${output_file_name}.json`)
+    await checkJSONFileMatchesFixture(`${output_file_name}.json`)
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}.json`,
@@ -116,7 +118,7 @@ describe('test lib/index.ts', (): void => {
     await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
     await checkIconCountInSpriteJson(`${output_file_name}.json`, 211)
     await checkFileMatchesFixture(`${output_file_name}.png`)
-    await checkFileMatchesFixture(`${output_file_name}.json`)
+    await checkJSONFileMatchesFixture(`${output_file_name}.json`)
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}.json`,
@@ -126,7 +128,38 @@ describe('test lib/index.ts', (): void => {
     await checkRatioInSpriteJson(`${output_file_name}@2x.json`, pixelRatios[1])
     await checkIconCountInSpriteJson(`${output_file_name}@2x.json`, 211)
     await checkFileMatchesFixture(`${output_file_name}@2x.png`)
-    await checkFileMatchesFixture(`${output_file_name}@2x.json`)
+    await checkJSONFileMatchesFixture(`${output_file_name}@2x.json`)
+
+    await checkIconsExistInSpritesheet(
+      `${output_file_name}@2x.json`,
+      `${output_file_name}@2x.png`,
+    )
+  })
+
+  test('sprite works with sdf', async() => {
+    const output_file_name = path.join(tmpDir, './test6')
+    const pixelRatios = [1, 2]
+    await generateSprite(output_file_name, [iconsSDFDir], pixelRatios, true)
+    expect(fs.existsSync(`${output_file_name}.json`)).toBeTruthy()
+    expect(fs.existsSync(`${output_file_name}.png`)).toBeTruthy()
+
+    expect(fs.existsSync(`${output_file_name}@2x.json`)).toBeTruthy()
+    expect(fs.existsSync(`${output_file_name}@2x.png`)).toBeTruthy()
+
+    await checkRatioInSpriteJson(`${output_file_name}.json`, pixelRatios[0])
+    await checkIconCountInSpriteJson(`${output_file_name}.json`, 1)
+    await checkFileMatchesFixture(`${output_file_name}.png`)
+    await checkJSONFileMatchesFixture(`${output_file_name}.json`)
+
+    await checkIconsExistInSpritesheet(
+      `${output_file_name}.json`,
+      `${output_file_name}.png`,
+    )
+
+    await checkRatioInSpriteJson(`${output_file_name}@2x.json`, pixelRatios[1])
+    await checkIconCountInSpriteJson(`${output_file_name}@2x.json`, 1)
+    await checkFileMatchesFixture(`${output_file_name}@2x.png`)
+    await checkJSONFileMatchesFixture(`${output_file_name}@2x.json`)
 
     await checkIconsExistInSpritesheet(
       `${output_file_name}@2x.json`,

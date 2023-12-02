@@ -10,6 +10,7 @@ const generate = async (
   input_directories: string[],
   ratio: number,
   defaultSpriteName = false,
+  sdf = false,
 ) => {
   let spriteName = ''
   if (defaultSpriteName === true) {
@@ -63,7 +64,7 @@ const generate = async (
     }
   }
 
-  return Promise.all(images.map((image) => image.parse())).then(
+  return Promise.all(images.map((image) => image.parse(sdf))).then(
     async (images) => {
       images.sort((a, b) => a.range - b.range)
       const matrix = new Matrix(images)
@@ -97,11 +98,16 @@ export const generateSprite = async (
   output_file_name: string,
   input_directories: string[],
   ratios: number[] = [1],
+  sdf: boolean = false,
 ): Promise<void> => {
+  if (sdf) {
+    console.log(`Generating sprite ${output_file_name}`)
+    console.log(`Input directories: ${input_directories}`)
+  }
   const promises: Promise<void>[] = []
   ratios.forEach((ratio) => {
     promises.push(
-      generate(output_file_name, input_directories, ratio, ratios.length > 1),
+      generate(output_file_name, input_directories, ratio, ratios.length > 1, sdf),
     )
   })
   await Promise.all(promises)
