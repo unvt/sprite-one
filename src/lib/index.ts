@@ -100,10 +100,6 @@ export const generateSprite = async (
   ratios: number[] = [1],
   sdf: boolean = false,
 ): Promise<void> => {
-  if (sdf) {
-    console.log(`Generating sprite ${output_file_name}`)
-    console.log(`Input directories: ${input_directories}`)
-  }
   const promises: Promise<void>[] = []
   ratios.forEach((ratio) => {
     promises.push(
