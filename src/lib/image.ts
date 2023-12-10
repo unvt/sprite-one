@@ -53,26 +53,26 @@ export class Image {
       // because the image is already at the specified size, we can use it directly.
       this.rendered_image = await intermediate_image.toBuffer()
     }
-    // add buffer
-    this.rendered_image = await sharp({
-      create: {
-        width: this.buffer_width(),
-        height: this.buffer_height(),
-        channels: 4,
-        background: { r: 0, g: 0, b: 0, alpha: 0 },
-      },
-    })
-      .composite([
-        {
-          input: this.rendered_image!,
-          top: this.buffer_length,
-          left: this.buffer_length,
-        },
-      ])
-      .raw()
-      .toBuffer()
 
     if (sdf) {
+      // add buffer
+      this.rendered_image = await sharp({
+        create: {
+          width: this.buffer_width(),
+          height: this.buffer_height(),
+          channels: 4,
+          background: { r: 0, g: 0, b: 0, alpha: 0 },
+        },
+      })
+        .composite([
+          {
+            input: this.rendered_image!,
+            top: this.buffer_length,
+            left: this.buffer_length,
+          },
+        ])
+        .raw()
+        .toBuffer()
       const radius = 8
       const img = this.rendered_image
       const pixelArray = new Uint8ClampedArray(img!.buffer)
@@ -120,16 +120,6 @@ export class Image {
       })
         .png()
         .toBuffer()
-    } else {
-      this.rendered_image = await sharp(this.rendered_image!.buffer, {
-        raw: {
-          width: this.buffer_width(),
-          height: this.buffer_height(),
-          channels: 4,
-        },
-      })
-        .png()
-        .toBuffer()
     }
     return this
   }
@@ -152,8 +142,8 @@ export class Image {
 
   to_obj(): SpriteImage {
     return {
-      height: this.buffer_height(),
-      width: this.buffer_width(),
+      height: this.sdf ? this.buffer_height() : this.real_height(),
+      width: this.sdf ? this.buffer_width() : this.real_width(),
       x: this.x,
       y: this.y,
       pixelRatio: this.ratio,
