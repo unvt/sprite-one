@@ -141,13 +141,22 @@ export class Image {
   }
 
   to_obj(): SpriteImage {
+    if (this.sdf) {
+      return {
+        height: this.buffer_height(),
+        width: this.buffer_width(),
+        x: this.x,
+        y: this.y,
+        pixelRatio: this.ratio,
+        sdf: this.sdf,
+      }
+    }
     return {
-      height: this.sdf ? this.buffer_height() : this.real_height(),
-      width: this.sdf ? this.buffer_width() : this.real_width(),
+      height: this.real_height(),
+      width: this.real_width(),
       x: this.x,
       y: this.y,
       pixelRatio: this.ratio,
-      sdf: this.sdf,
     }
   }
 }
