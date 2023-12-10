@@ -17,11 +17,7 @@ program
     '-r, --ratio <ratios...>',
     'pixel ratio to generate sprite. default is 1.',
   )
-  .option(
-    '--sdf',
-    'generate sprite with signed distance field.',
-    false
-  )
+  .option('--sdf', 'generate sprite with signed distance field.', false)
   .action(async (spriteFilename: string) => {
     const options = program.opts()
     if (options.ratio) {
@@ -29,7 +25,12 @@ program
         return Number(r)
       })
     }
-    await generateSprite(spriteFilename, options.icon, options.ratio, options.sdf)
+    await generateSprite(
+      spriteFilename,
+      options.icon,
+      options.ratio,
+      options.sdf,
+    )
   })
 
 program.parse(process.argv)

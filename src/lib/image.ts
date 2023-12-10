@@ -55,18 +55,20 @@ export class Image {
     }
     // add buffer
     this.rendered_image = await sharp({
-        create: {
-          width: this.buffer_width(),
-          height: this.buffer_height(),
-          channels: 4,
-          background: { r: 0, g: 0, b: 0, alpha: 0 },
+      create: {
+        width: this.buffer_width(),
+        height: this.buffer_height(),
+        channels: 4,
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      },
+    })
+      .composite([
+        {
+          input: this.rendered_image!,
+          top: this.buffer_length,
+          left: this.buffer_length,
         },
-      })
-      .composite([{
-        input: this.rendered_image!,
-        top: this.buffer_length,
-        left: this.buffer_length,
-      }])
+      ])
       .raw()
       .toBuffer()
 
@@ -81,11 +83,11 @@ export class Image {
       }
       const outer_df = alphas.map((alpha) => {
         if (alpha === 0) return Number.MAX_VALUE
-        return Math.max(0, 0.5 - (alpha / 255))**2
+        return Math.max(0, 0.5 - alpha / 255) ** 2
       })
       const inner_df = alphas.map((alpha) => {
         if (alpha === 255) return Number.MAX_VALUE
-        return Math.max(0, (alpha / 255) - 0.5)**2
+        return Math.max(0, alpha / 255 - 0.5) ** 2
       })
       for (let col = 0; col < this.buffer_width(); col++) {
         dt(outer_df, col, this.buffer_width(), this.buffer_height())
@@ -97,7 +99,13 @@ export class Image {
       }
       const result = outer_df.map((outerDfValue, index) => {
         const innerDfValue = inner_df[index]
-        return Math.min(1.0, Math.max(-1.0, (Math.sqrt(outerDfValue) - Math.sqrt(innerDfValue)) / radius))
+        return Math.min(
+          1.0,
+          Math.max(
+            -1.0,
+            (Math.sqrt(outerDfValue) - Math.sqrt(innerDfValue)) / radius,
+          ),
+        )
       })
       const colors = clamp_to_u8(result, 0.25)
       for (let i = 0, j = 0; i < pixelArray.length; i += 4, j++) {
@@ -107,18 +115,21 @@ export class Image {
         raw: {
           width: this.buffer_width(),
           height: this.buffer_height(),
-          channels: 4
-        }
-      }).png().toBuffer()
+          channels: 4,
+        },
+      })
+        .png()
+        .toBuffer()
     } else {
       this.rendered_image = await sharp(this.rendered_image!.buffer, {
         raw: {
           width: this.buffer_width(),
           height: this.buffer_height(),
-          channels: 4
-        }
+          channels: 4,
+        },
       })
-        .png().toBuffer()
+        .png()
+        .toBuffer()
     }
     return this
   }
@@ -170,7 +181,7 @@ function dt(grid: number[], offset: number, stepBy: number, size: number) {
       const q2 = q * q
       const vk2 = v[k] * v[k]
       const denom = 2 * q - 2 * v[k]
-      s = ((f[q] + q2) - (f[v[k]] + vk2)) / denom
+      s = (f[q] + q2 - (f[v[k]] + vk2)) / denom
 
       if (s <= z[k]) {
         k -= 1
@@ -202,6 +213,6 @@ function clamp_to_u8(sdf: Array<number>, cutoff: number): Array<number> {
     throw new Error('cutoff must be between 0 and 1')
   }
   return sdf.map((v) => {
-    return (255.0 - 255.0 * (v + cutoff))
+    return 255.0 - 255.0 * (v + cutoff)
   })
 }

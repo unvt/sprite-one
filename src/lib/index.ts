@@ -103,7 +103,13 @@ export const generateSprite = async (
   const promises: Promise<void>[] = []
   ratios.forEach((ratio) => {
     promises.push(
-      generate(output_file_name, input_directories, ratio, ratios.length > 1, sdf),
+      generate(
+        output_file_name,
+        input_directories,
+        ratio,
+        ratios.length > 1,
+        sdf,
+      ),
     )
   })
   await Promise.all(promises)

@@ -136,7 +136,7 @@ describe('test lib/index.ts', (): void => {
     )
   })
 
-  test('sprite works with sdf', async() => {
+  test('sprite works with sdf', async () => {
     const output_file_name = path.join(tmpDir, './test6')
     const pixelRatios = [1, 2]
     await generateSprite(output_file_name, [iconsSDFDir], pixelRatios, true)
