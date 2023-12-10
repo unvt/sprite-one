@@ -67,7 +67,7 @@ export class Image {
         top: this.buffer_length,
         left: this.buffer_length,
       }])
-      .png()
+      .raw()
       .toBuffer()
 
     if (sdf) {
@@ -99,17 +99,26 @@ export class Image {
         const innerDfValue = inner_df[index]
         return Math.min(1.0, Math.max(-1.0, (Math.sqrt(outerDfValue) - Math.sqrt(innerDfValue)) / radius))
       })
-      const normalizedData = result.map(value => {
-        return Math.round(((value + 1) / 2) * 255);
-      })
-      const buffer = Buffer.from(normalizedData)
-      this.rendered_image = await sharp(buffer, {
+      const colors = clamp_to_u8(result, 0.25)
+      for (let i = 0, j = 0; i < pixelArray.length; i += 4, j++) {
+        pixelArray[i + 3] = colors[j]
+      }
+      this.rendered_image = await sharp(pixelArray, {
         raw: {
           width: this.buffer_width(),
           height: this.buffer_height(),
-          channels: 1
+          channels: 4
         }
       }).png().toBuffer()
+    } else {
+      this.rendered_image = await sharp(this.rendered_image!.buffer, {
+        raw: {
+          width: this.buffer_width(),
+          height: this.buffer_height(),
+          channels: 4
+        }
+      })
+        .png().toBuffer()
     }
     return this
   }
@@ -185,4 +194,14 @@ function dt(grid: number[], offset: number, stepBy: number, size: number) {
     const vkf64 = v[k]
     grid[offset + q * stepBy] = (qf64 - vkf64) * (qf64 - vkf64) + f[v[k]]
   }
+}
+
+// original code: https://github.com/stadiamaps/sdf_font_tools/blob/main/sdf_glyph_renderer/src/core.rs#L221C2-L221C2
+function clamp_to_u8(sdf: Array<number>, cutoff: number): Array<number> {
+  if (cutoff <= 0.0 || cutoff >= 1.0) {
+    throw new Error('cutoff must be between 0 and 1')
+  }
+  return sdf.map((v) => {
+    return (255.0 - 255.0 * (v + cutoff))
+  })
 }
