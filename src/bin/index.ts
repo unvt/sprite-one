@@ -19,7 +19,7 @@ program
   )
   .option(
     '--sdf',
-    'generate sprite with signed distance field. default is false.',
+    'generate sprite with signed distance field.',
     false
   )
   .action(async (spriteFilename: string) => {
