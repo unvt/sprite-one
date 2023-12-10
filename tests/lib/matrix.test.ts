@@ -23,8 +23,8 @@ describe('test lib/matrix.ts', (): void => {
     const matrix = new Matrix(images1)
     matrix.calc()
 
-    expect(matrix.max_x).toStrictEqual(21)
-    expect(matrix.max_y).toStrictEqual(21)
+    expect(matrix.max_x).toStrictEqual(15)
+    expect(matrix.max_y).toStrictEqual(15)
   })
 
   test('matrix calculation works with 2 images', async () => {
@@ -40,7 +40,7 @@ describe('test lib/matrix.ts', (): void => {
     const matrix = new Matrix(images1)
     matrix.calc()
 
-    expect(matrix.max_x).toStrictEqual(42)
-    expect(matrix.max_y).toStrictEqual(21)
+    expect(matrix.max_x).toStrictEqual(30)
+    expect(matrix.max_y).toStrictEqual(15)
   })
 })

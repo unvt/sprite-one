@@ -16,8 +16,8 @@ export class Matrix {
       this.images.map((image) => {
         return {
           image,
-          width: image.buffer_width(),
-          height: image.buffer_height(),
+          width: image.sdf ? image.buffer_width() : image.real_width(),
+          height: image.sdf ? image.buffer_height() : image.real_height(),
         }
       }),
     )
