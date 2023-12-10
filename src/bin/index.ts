@@ -17,7 +17,7 @@ program
     '-r, --ratio <ratios...>',
     'pixel ratio to generate sprite. default is 1.',
   )
-  .option('--sdf', 'generate sprite with signed distance field.', false)
+  .option('--sdf', 'generate sprite with SDF (Signed Distance Field).', false)
   .action(async (spriteFilename: string) => {
     const options = program.opts()
     if (options.ratio) {
