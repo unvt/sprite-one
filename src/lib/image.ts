@@ -25,6 +25,7 @@ export class Image {
     this.name = name
     this.ratio = ratio
     this.file_ratio = file_ratio || 1
+    this.buffer_length *= this.ratio
 
     if (this.file_ratio > 1 && this.ratio !== this.file_ratio) {
       throw new Error(
@@ -73,7 +74,7 @@ export class Image {
         ])
         .raw()
         .toBuffer()
-      const radius = 8
+      const radius = 8 * this.ratio
       const img = this.rendered_image
       const pixelArray = new Uint8ClampedArray(img!.buffer)
       const alphas = []
