@@ -13,9 +13,9 @@ npm install @unvt/sprite-one
 
 ## Usage
 
-- CLI
+### CLI (also works with `npx @unvt/sprite-one`)
 
-```bash
+```
 $ sprite-one -h
 Usage: sprite-one [options] <sprite_filename>
 
@@ -29,7 +29,26 @@ Options:
   -h, --help               display help for command
 ```
 
-- npm
+> [!TIP]
+> The options `--icon` and `--ratio` accept multiple arguments separated by spaces.
+> The error `missing required argument 'sprite_filename'` means that the `sprite_filename` was interpreted as an input to either `--icon` or `--ratio`. To fix it, pass the output before the options (see below example), or add a `--` between the options and the `sprite_filename`.
+
+**Example**
+
+To create two spritesheets for 1x and 2x pixel ratios from one directory of sprites, use the following:
+
+```
+$ sprite-one ./output/prefix -i ./input/icons -r 1 2
+```
+
+The above command will create the following:
+
+* `./ouput/prefix.json`
+* `./ouput/prefix.png`
+* `./ouput/prefix@2x.json`
+* `./ouput/prefix@2x.png`
+
+### npm (as a library)
 
 ```javascript
 import { generateSprite } from '@unvt/sprite-one'
