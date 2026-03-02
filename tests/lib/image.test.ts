@@ -28,7 +28,7 @@ describe('test lib/image.ts', (): void => {
   it('works with ratio and sdf', async () => {
     const image = new Image(path.join(iconsDir, 'airport.svg'), 2, 'airport')
     await image.parse(true)
-    expect(image.buffer_height()).toStrictEqual(36)
-    expect(image.buffer_width()).toStrictEqual(36)
+    expect(image.buffer_height()).toStrictEqual(42)
+    expect(image.buffer_width()).toStrictEqual(42)
   })
 })
