@@ -25,6 +25,7 @@ export class Image {
     this.name = name
     this.ratio = ratio
     this.file_ratio = file_ratio || 1
+
     if (this.file_ratio > 1 && this.ratio !== this.file_ratio) {
       throw new Error(
         `If the file_ratio is not 1, it must be equal to the ratio`,
