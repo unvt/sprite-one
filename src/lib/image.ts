@@ -55,6 +55,8 @@ export class Image {
     }
 
     if (sdf) {
+      this.buffer_length *= this.ratio
+
       // add buffer
       this.rendered_image = await sharp({
         create: {
@@ -73,7 +75,7 @@ export class Image {
         ])
         .raw()
         .toBuffer()
-      const radius = 8
+      const radius = 8 * this.ratio
       const img = this.rendered_image
       const pixelArray = new Uint8ClampedArray(img!.buffer)
       const alphas = []
