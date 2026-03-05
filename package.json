@@ -17,17 +17,17 @@
   "license": "MIT",
   "dependencies": {
     "bin-pack": "^1.0.2",
-    "commander": "^11.1.0",
-    "sharp": "^0.33.0"
+    "commander": "^14.0.3",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@types/bin-pack": "^1.0.3",
-    "@types/jest": "^29.5.11",
-    "@types/node": "^20.10.4",
-    "jest": "^29.7.0",
-    "prettier": "3.1.0",
-    "ts-jest": "^29.1.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.3.3",
+    "jest": "^30.2.0",
+    "prettier": "3.8.1",
+    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.9.3"
   }
 }
