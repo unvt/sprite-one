@@ -7,6 +7,9 @@
   "bin": {
     "sprite-one": "dist/bin/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "jest",
