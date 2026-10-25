@@ -24,15 +24,15 @@
   "dependencies": {
     "bin-pack": "^1.0.2",
     "commander": "^15.0.0",
-    "sharp": "^0.35.3"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@types/bin-pack": "^1.0.3",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.1.2",
-    "jest": "^30.4.2",
-    "prettier": "^3.9.6",
-    "ts-jest": "^29.4.12",
+    "@types/node": "^26.6.5",
+    "jest": "^30.5.2",
+    "prettier": "^3.9.10",
+    "ts-jest": "^29.4.15",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   },
